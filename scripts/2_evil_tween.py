@@ -15,7 +15,7 @@ networks = pandas.DataFrame(columns=["BSSID", "SSID", "dBm_Signal", "Channel"])
 networks.set_index("BSSID", inplace=True)
 
 def PacketHandler(packet) :
-  if packet.haslayer(Dot11Beacon):
+    if packet.haslayer(Dot11Beacon):
         # extract the MAC address of the network
         bssid = packet[Dot11].addr2
         # get the name of it
@@ -77,7 +77,7 @@ if __name__ == '__main__':
     channel_changer.daemon = True
     channel_changer.start()
 
-    # start sniffing, it stops 10 seconds late
+    # start sniffing, it stops 10 seconds later
     sniff(prn=PacketHandler, iface=iface, timeout=10)
 
     # stop the threads, we finished the scan

@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#!/usr/bin/env python
 # Authors : Axel Vallon and Robin Gaudin
 # Date : 26.03.2022
 
@@ -23,7 +23,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="A python script for creating a ssid flood attack with random ssid or chosen ones")
     parser.add_argument("-f", "--file", dest="file", help="File with a ssid on each line")
     parser.add_argument("-r", "--random", dest="number", help="Number of random generated ssid", default=0)
-    parser.add_argument("-i", dest="iface", help="Interface to use, must be in monitor mode, default is 'wlan'", default=DEFAULT_WLAN)
+    parser.add_argument("-i", dest="iface", help="Interface to use, must be in monitor mode, default is 'wlan0'", default=DEFAULT_WLAN)
     args = parser.parse_args()
     file = args.file
     iface = args.iface

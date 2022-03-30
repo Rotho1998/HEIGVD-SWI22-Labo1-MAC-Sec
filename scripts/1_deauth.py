@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#!/usr/bin/env python
 # Authors : Axel Vallon and Robin Gaudin
 # Date : 26.03.2022
 
