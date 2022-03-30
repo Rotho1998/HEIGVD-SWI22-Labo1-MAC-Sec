@@ -135,7 +135,11 @@ a)	Développer un script en Python/Scapy avec les fonctionnalités suivantes :
 * Permettre à l'utilisateur de choisir le réseau à attaquer
 * Générer un beacon concurrent annonçant un réseau sur un canal différent se trouvant à 6 canaux de séparation du réseau original
 
+![image-20220324161403584](images/tween-attack.png)
+
 __Question__ : Expliquer l'effet de cette attaque sur la cible
+
+
 
 
 ### 3. SSID flood attack
