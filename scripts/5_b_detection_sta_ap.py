@@ -1,0 +1,30 @@
+#!/usr/bin/env python
+# Authors : Axel Vallon and Robin Gaudin
+# Date : 26.03.2022
+# source : https://stackoverflow.com/questions/52981542/python-scapy-distinguish-between-acesspoint-to-station
+
+connections = {}
+
+def PacketHandler(packet) :
+    if packet.haslayer(Dot11) and packet.type == 2: #Data frame
+        DS = packet.FCfield & 0x3
+        toDS = DS & 0x01 != 0
+        fromDS = DS & 0x2 != 0
+        if toDS and not fromDS:
+            connections[packet.addr2] = packet.addr1
+        if not toDS and fromDS:
+            connections[packet.addr1] = packet.addr2
+
+
+if __name__ == '__main__':
+    import argparse
+    DEFAULT_WLAN = "wlan0"
+    parser = argparse.ArgumentParser(description="A python script to check which sta is connected to an ap")
+    parser.add_argument("-i", dest="iface", help="Interface to use, must be in monitor mode, default is 'wlan0'", default=DEFAULT_WLAN)
+    args = parser.parse_args()
+    iface = args.iface
+
+    sniff(prn=PacketHandler, iface=iface, timeout=10)
+    print(STAs &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; APs)
+    for k, v in connections.items():
+        print(k + '    ' + v)
