@@ -19,7 +19,7 @@ def PacketHandler(packet) :
 if __name__ == '__main__':
     import argparse
     DEFAULT_WLAN = "wlan0"
-    parser = argparse.ArgumentParser(description="A python script for creating a probe request evil twin attack with target SSID")
+    parser = argparse.ArgumentParser(description="A python script to detect if a STA want to connect to an AP")
     parser.add_argument("-i", dest="iface", help="Interface to use, must be in monitor mode, default is 'wlan0'", default=DEFAULT_WLAN)
     parser.add_argument("-s", "--ssid", dest="ssid", help="the requested ssid", required=True)
     args = parser.parse_args()

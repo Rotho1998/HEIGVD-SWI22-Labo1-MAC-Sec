@@ -12,6 +12,7 @@ def PacketHandler(packet) :
         if found_ssid == ssid:
             input_result = input("Found a ssid, do you want to launch an attack ? (Y/N)")
             if input_result == "Y":
+                # we build the frame, the unknown mac address are not important there
                 dot11 = Dot11(type=0, subtype=8, addr1="ff:ff:ff:ff:ff:ff", addr2="aa:aa:aa:aa:aa:aa", addr3="aa:aa:aa:aa:aa:aa")
                 essid = Dot11Elt(ID="SSID", info=ssid, len=len(ssid))
                 frame = RadioTap()/dot11/Dot11ProbeResp()/essid

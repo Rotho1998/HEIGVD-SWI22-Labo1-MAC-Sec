@@ -3,15 +3,19 @@
 # Date : 26.03.2022
 # source : https://stackoverflow.com/questions/52981542/python-scapy-distinguish-between-acesspoint-to-station
 
+# Allow to use a dictionnary in Python
 connections = {}
 
 def PacketHandler(packet) :
     if packet.haslayer(Dot11) and packet.type == 2: #Data frame
         DS = packet.FCfield & 0x3
+        # Allow us to check who sent
         toDS = DS & 0x01 != 0
         fromDS = DS & 0x2 != 0
+        # From the STA to the AP
         if toDS and not fromDS:
             connections[packet.addr2] = packet.addr1
+        # From the AP to the STA
         if not toDS and fromDS:
             connections[packet.addr1] = packet.addr2
 
@@ -24,7 +28,10 @@ if __name__ == '__main__':
     args = parser.parse_args()
     iface = args.iface
 
+    # Set timeout to a higher value if you want more result
     sniff(prn=PacketHandler, iface=iface, timeout=10)
+
+    # Print the result
     print(STAs &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; APs)
     for k, v in connections.items():
         print(k + '    ' + v)
