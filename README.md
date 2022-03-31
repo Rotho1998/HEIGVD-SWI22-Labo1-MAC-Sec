@@ -102,13 +102,17 @@ sudo aireplay-ng -0 5 -a F2:91:BB:B7:82:B7 -c 9C:B6:D0:B6:D9:DD wlan0 #Attaque d
 
 __Question__ : quel code est utilisé par aircrack pour déauthentifier un client 802.11. Quelle est son interpretation ?
 
-![image-20220324161403584](images/image-20220324161403584.png)
+![](images/Question_1.png)
 
-Cela utilise le code 7 ( Class 3 frame received from nonassociated station).
+Aircrack utilise le code 7 (Class 3 frame received from nonassociated station).
 
 __Question__ : A l'aide d'un filtre d'affichage, essayer de trouver d'autres trames de déauthentification dans votre capture. Avez-vous en trouvé d'autres ? Si oui, quel code contient-elle et quelle est son interpretation ?
 
+Nous avons utilisé le filtre d'affichage suivant: `wlan.fc.type_subtype == 0xc`, et cela nous a permis de récupérer des trames de déauthentification après quelques minutes :
 
+![](images/Question_2.png)
+
+Cette fois-ci, c'est le code 1 qui a été utilisé (Unspecified reason).
 
 b) Développer un script en Python/Scapy capable de générer et envoyer des trames de déauthentification. Le script donne le choix entre des Reason codes différents (liste ci-après) et doit pouvoir déduire si le message doit être envoyé à la STA ou à l'AP :
 
@@ -119,13 +123,25 @@ b) Développer un script en Python/Scapy capable de générer et envoyer des tra
 
 __Question__ : quels codes/raisons justifient l'envoie de la trame à la STA cible et pourquoi ?
 
+Les codes 1, 4 et 5 correspondent à ce cas, puisque c'est l'AP qui va déconnecter la STA.
+
 __Question__ : quels codes/raisons justifient l'envoie de la trame à l'AP et pourquoi ?
+
+C'est l'inverse cette fois-ci, la STA va déconnecter l'AP, le code 8 correspond à ce cas.
 
 __Question__ : Comment essayer de déauthentifier toutes les STA ?
 
+En utilisant comme adresse cible de la STA l'adresse de broadcast MAC (FF:FF:FF:FF:FF:FF).
+
 __Question__ : Quelle est la différence entre le code 3 et le code 8 de la liste ?
 
+Code 3 : L'AP est passée hors-ligne, ce qui déauthentifie la STA.
+
+Code 8 : La STA s'est déconnectée de l'AP pour passer sur un autre réseau par exemple.
+
 __Question__ : Expliquer l'effet de cette attaque sur la cible
+
+La cible se fait simplement déconnecter du réseau.
 
 ### 2. Fake channel evil tween attack
 a)	Développer un script en Python/Scapy avec les fonctionnalités suivantes :
@@ -135,11 +151,11 @@ a)	Développer un script en Python/Scapy avec les fonctionnalités suivantes :
 * Permettre à l'utilisateur de choisir le réseau à attaquer
 * Générer un beacon concurrent annonçant un réseau sur un canal différent se trouvant à 6 canaux de séparation du réseau original
 
-![image-20220324161403584](images/tween-attack.png)
-
 __Question__ : Expliquer l'effet de cette attaque sur la cible
 
+Le but de cette attaque étant de créer un "faux" réseau, une personne pourrait vouloir se connecter à un réseau ayant le même SSID, mais en se connectant réellement à notre AP, avec laquelle on pourrait récupérer les identifiants de connexion par exemple.
 
+On pourrait donc voler ses identifiants pour se connecter sur le "vrai" réseau ensuite.
 
 
 ### 3. SSID flood attack
@@ -178,7 +194,13 @@ Pour la détection du SSID, vous devez utiliser Scapy. Pour proposer un evil twi
 
 __Question__ : comment ça se fait que ces trames puissent être lues par tout le monde ? Ne serait-il pas plus judicieux de les chiffrer ?
 
+Ces trames peuvent être lues par tout le monde puisque c'est le fonctionnement de base du système, afin de détecter les réseaux à proximité.
+
+Concernant le chiffrement, cela n'est pas forcément nécessaire puisqu'aucune information sensible n'est échangée. Cela pourrait devenir compliqué également puisque le secret partagé entre l'AP et la STA devrait être connu par tous les AP du même réseau. 
+
 __Question__ : pourquoi les dispositifs iOS et Android récents ne peuvent-ils plus être tracés avec cette méthode ?
+
+Pour chaque connexion, l'adresse MAC est aléatoire. A chaque nouvelle connexion l'adresse MAC sera donc différente et il devient très compliqué de le tracer.
 
 
 ### 5. Détection de clients et réseaux
@@ -202,7 +224,7 @@ Développer un script en Python/Scapy capable de reveler le SSID correspondant �
 
 __Question__ : expliquer en quelques mots la solution que vous avez trouvée pour ce problème ?
 
-
+On utilise les champs vides récupérés lors du scan, indiquant que le ssid est caché, afin de trouver l'adresse MAC de l'AP. Dans une seconde étape, on arrive à récupérer le nom du ssid lorsqu'une STA se connecte à l'AP.
 
 ## Livrables
 

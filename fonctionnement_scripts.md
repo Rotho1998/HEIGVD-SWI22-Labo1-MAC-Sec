@@ -67,3 +67,9 @@ Adresse MAC de l'AP :
 Adresse MAC de la machine hôte :
 
 ![](images/script5b_3.png)
+
+## 6. Hidden SSID reveal
+
+Lancement du script :
+
+![](images/script6_1.png)
