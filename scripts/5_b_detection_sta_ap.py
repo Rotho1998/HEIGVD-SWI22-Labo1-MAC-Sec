@@ -3,6 +3,8 @@
 # Date : 26.03.2022
 # source : https://stackoverflow.com/questions/52981542/python-scapy-distinguish-between-acesspoint-to-station
 
+from scapy.all import *
+
 # Allow to use a dictionnary in Python
 connections = {}
 
@@ -29,9 +31,10 @@ if __name__ == '__main__':
     iface = args.iface
 
     # Set timeout to a higher value if you want more result
-    sniff(prn=PacketHandler, iface=iface, timeout=10)
+    sniff(prn=PacketHandler, iface=iface, timeout=30)
 
     # Print the result
-    print(STAs &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; APs)
+    print("STAs                      APs")
     for k, v in connections.items():
         print(k + '    ' + v)
+

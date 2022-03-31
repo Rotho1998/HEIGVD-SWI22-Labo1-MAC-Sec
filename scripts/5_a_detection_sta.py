@@ -2,6 +2,8 @@
 # Authors : Axel Vallon and Robin Gaudin
 # Date : 26.03.2022
 
+from scapy.all import *
+
 bssids = []
 
 def PacketHandler(packet) :
